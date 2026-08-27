@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const path = require('node:path');
 
 const {
   PAGE_IMAGES,
@@ -14,7 +15,8 @@ const {
   openLightbox,
   closeLightbox,
   normalizeTheme,
-  getNextTheme
+  getNextTheme,
+  getImageSources
 } = require('../script');
 
 test('includes every infographic in the intended reading order', () => {
@@ -46,6 +48,32 @@ test('includes every infographic in the intended reading order', () => {
       'SKU.png'
     ]
   );
+});
+
+test('each infographic has optimized full-size and thumbnail assets', () => {
+  for (const page of PAGE_IMAGES) {
+    assert.match(page.webpFile, /\.webp$/);
+    assert.match(page.thumbnailFile, /\.webp$/);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'infographics', 'webp', page.webpFile)));
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'infographics', 'thumbs', page.thumbnailFile)));
+  }
+});
+
+test('image sources keep WebP primary assets and PNG fallbacks', () => {
+  const page = PAGE_IMAGES[0];
+
+  assert.deepEqual(getImageSources(page, 'full'), {
+    primary: 'infographics/webp/交叉比率.webp',
+    fallback: 'infographics/交叉比率.png',
+    width: 1536,
+    height: 1024
+  });
+  assert.deepEqual(getImageSources(page, 'thumbnail'), {
+    primary: 'infographics/thumbs/交叉比率.webp',
+    fallback: 'infographics/交叉比率.png',
+    width: 300,
+    height: 200
+  });
 });
 
 test('desktop mode shows a two-page spread and advances by spreads', () => {
@@ -166,4 +194,16 @@ test('page caption stays readable on its dark overlay in light theme', () => {
 
   assert.match(pageCaptionBlock, /background: rgba\(22, 22, 20, 0\.78\);/);
   assert.match(pageCaptionBlock, /color: var\(--paper\);/);
+});
+
+test('lightbox image stays fully contained within its available area', () => {
+  const css = fs.readFileSync('styles.css', 'utf8');
+  const containerBlock = css.match(/\.lightbox-image-container\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+  const imageBlock = css.match(/\.lightbox-image-container img\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+
+  assert.match(containerBlock, /position: fixed;/);
+  assert.match(containerBlock, /inset: 90px 90px 24px;/);
+  assert.match(imageBlock, /width: 100%;/);
+  assert.match(imageBlock, /height: 100%;/);
+  assert.match(imageBlock, /object-fit: contain;/);
 });

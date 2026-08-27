@@ -32,6 +32,15 @@ python -m http.server 8080
 http://127.0.0.1:8080/
 ```
 
+首次取得專案或原始 PNG 更新後，先安裝開發工具並重新產生 WebP 資產：
+
+```powershell
+npm install
+npm run optimize-images
+```
+
+網站會優先使用 `infographics/webp/` 與 `infographics/thumbs/` 的 WebP 圖片，原始 `infographics/*.png` 僅作為瀏覽器不支援 WebP 時的 fallback。
+
 ## 測試
 
 本專案使用 Node.js 內建測試執行器：
@@ -57,8 +66,11 @@ npm test
 ├── index.html              # 靜態網頁入口
 ├── styles.css              # RWD、翻頁書、深淺色主題樣式
 ├── script.js               # 翻頁、縮圖、lightbox、主題切換邏輯
+├── scripts/optimize-images.mjs # PNG 轉 WebP 與縮圖產生工具
 ├── package.json            # 測試指令
 ├── infographics/           # 資訊圖表 PNG 圖片
+│   ├── webp/               # 全尺寸 WebP 圖片
+│   └── thumbs/             # 300 x 200 WebP 縮圖
 └── test/
     └── flipbook.test.js    # 自動化測試
 ```

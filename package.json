@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "sharp": "^0.34.3"
+  }
 }

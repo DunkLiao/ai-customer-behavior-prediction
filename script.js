@@ -1,26 +1,26 @@
 const PAGE_IMAGES = [
-  { title: '交叉比率', file: '交叉比率.png' },
-  { title: '安全存量', file: '安全存量.png' },
-  { title: '步留率', file: '步留率.png' },
-  { title: '坪效', file: '坪效.png' },
-  { title: '枱帳 1', file: '枱帳_1.png' },
-  { title: '枱帳 2', file: '枱帳_2.png' },
-  { title: '范蠡的經營智慧', file: '范蠡的經營智慧.png' },
-  { title: '孫子兵法在零售業分析', file: '孫子兵法在零售業分析.png' },
-  { title: '真毛利', file: '真毛利.png' },
-  { title: '貢獻度與投入資源要能夠平衡', file: '貢獻度與投入資源要能夠平衡.png' },
-  { title: '商品敏感性與營業額', file: '商品敏感性與營業額.png' },
-  { title: '粗毛利', file: '粗毛利.png' },
-  { title: '零售ABCZ法', file: '零售ABCZ法.png' },
-  { title: '銷售金額眾數', file: '銷售金額眾數.png' },
-  { title: '駐足率', file: '駐足率.png' },
-  { title: '膨脹率', file: '膨脹率.png' },
-  { title: '總毛利率', file: '總毛利率.png' },
-  { title: 'ABCZ分析', file: 'ABCZ分析.png' },
-  { title: 'AISAS', file: 'AISAS.png' },
-  { title: 'PESTEL分析', file: 'PESTEL分析.png' },
-  { title: 'pi值', file: 'pi值.png' },
-  { title: 'SKU', file: 'SKU.png' }
+  { title: '交叉比率', file: '交叉比率.png', webpFile: '交叉比率.webp', thumbnailFile: '交叉比率.webp' },
+  { title: '安全存量', file: '安全存量.png', webpFile: '安全存量.webp', thumbnailFile: '安全存量.webp' },
+  { title: '步留率', file: '步留率.png', webpFile: '步留率.webp', thumbnailFile: '步留率.webp' },
+  { title: '坪效', file: '坪效.png', webpFile: '坪效.webp', thumbnailFile: '坪效.webp' },
+  { title: '枱帳 1', file: '枱帳_1.png', webpFile: '枱帳_1.webp', thumbnailFile: '枱帳_1.webp' },
+  { title: '枱帳 2', file: '枱帳_2.png', webpFile: '枱帳_2.webp', thumbnailFile: '枱帳_2.webp' },
+  { title: '范蠡的經營智慧', file: '范蠡的經營智慧.png', webpFile: '范蠡的經營智慧.webp', thumbnailFile: '范蠡的經營智慧.webp' },
+  { title: '孫子兵法在零售業分析', file: '孫子兵法在零售業分析.png', webpFile: '孫子兵法在零售業分析.webp', thumbnailFile: '孫子兵法在零售業分析.webp' },
+  { title: '真毛利', file: '真毛利.png', webpFile: '真毛利.webp', thumbnailFile: '真毛利.webp' },
+  { title: '貢獻度與投入資源要能夠平衡', file: '貢獻度與投入資源要能夠平衡.png', webpFile: '貢獻度與投入資源要能夠平衡.webp', thumbnailFile: '貢獻度與投入資源要能夠平衡.webp' },
+  { title: '商品敏感性與營業額', file: '商品敏感性與營業額.png', webpFile: '商品敏感性與營業額.webp', thumbnailFile: '商品敏感性與營業額.webp' },
+  { title: '粗毛利', file: '粗毛利.png', webpFile: '粗毛利.webp', thumbnailFile: '粗毛利.webp' },
+  { title: '零售ABCZ法', file: '零售ABCZ法.png', webpFile: '零售ABCZ法.webp', thumbnailFile: '零售ABCZ法.webp' },
+  { title: '銷售金額眾數', file: '銷售金額眾數.png', webpFile: '銷售金額眾數.webp', thumbnailFile: '銷售金額眾數.webp' },
+  { title: '駐足率', file: '駐足率.png', webpFile: '駐足率.webp', thumbnailFile: '駐足率.webp' },
+  { title: '膨脹率', file: '膨脹率.png', webpFile: '膨脹率.webp', thumbnailFile: '膨脹率.webp' },
+  { title: '總毛利率', file: '總毛利率.png', webpFile: '總毛利率.webp', thumbnailFile: '總毛利率.webp' },
+  { title: 'ABCZ分析', file: 'ABCZ分析.png', webpFile: 'ABCZ分析.webp', thumbnailFile: 'ABCZ分析.webp' },
+  { title: 'AISAS', file: 'AISAS.png', webpFile: 'AISAS.webp', thumbnailFile: 'AISAS.webp' },
+  { title: 'PESTEL分析', file: 'PESTEL分析.png', webpFile: 'PESTEL分析.webp', thumbnailFile: 'PESTEL分析.webp' },
+  { title: 'pi值', file: 'pi值.png', webpFile: 'pi值.webp', thumbnailFile: 'pi值.webp' },
+  { title: 'SKU', file: 'SKU.png', webpFile: 'SKU.webp', thumbnailFile: 'SKU.webp' }
 ];
 
 const DESKTOP_BREAKPOINT = 860;
@@ -128,8 +128,43 @@ function closeLightbox(state) {
   return state;
 }
 
-function imagePath(page) {
-  return `infographics/${encodeURIComponent(page.file)}`;
+function imagePath(file) {
+  return `infographics/${file.split('/').map((part) => encodeURIComponent(part)).join('/')}`;
+}
+
+function getImageSources(page, variant = 'full') {
+  const isThumbnail = variant === 'thumbnail';
+  return {
+    primary: `infographics/${isThumbnail ? 'thumbs' : 'webp'}/${isThumbnail ? page.thumbnailFile : page.webpFile}`,
+    fallback: `infographics/${page.file}`,
+    width: isThumbnail ? 300 : 1536,
+    height: isThumbnail ? 200 : 1024
+  };
+}
+
+function createResponsiveImage(page, {
+  alt = '',
+  variant = 'full',
+  loading = 'lazy',
+  fetchPriority = 'auto'
+} = {}) {
+  const sources = getImageSources(page, variant);
+  const picture = document.createElement('picture');
+  const source = document.createElement('source');
+  source.type = 'image/webp';
+  source.srcset = imagePath(sources.primary.replace(/^infographics\//, ''));
+
+  const image = document.createElement('img');
+  image.src = imagePath(sources.fallback.replace(/^infographics\//, ''));
+  image.alt = alt;
+  image.width = sources.width;
+  image.height = sources.height;
+  image.loading = loading;
+  image.decoding = 'async';
+  image.fetchPriority = fetchPriority;
+
+  picture.append(source, image);
+  return picture;
 }
 
 function applyTheme(theme, toggleButton) {
@@ -187,13 +222,13 @@ function initFlipBook() {
     prev: document.querySelector('[data-prev]'),
     next: document.querySelector('[data-next]'),
     lightbox: document.querySelector('[data-lightbox]'),
-    lightboxImage: document.querySelector('[data-lightbox-image]'),
     lightboxTitle: document.querySelector('[data-lightbox-title]'),
     lightboxStatus: document.querySelector('[data-lightbox-status]'),
     lightboxClose: document.querySelector('[data-lightbox-close]'),
     lightboxPrev: document.querySelector('[data-lightbox-prev]'),
     lightboxNext: document.querySelector('[data-lightbox-next]'),
-    themeToggle: document.querySelector('[data-theme-toggle]')
+    themeToggle: document.querySelector('[data-theme-toggle]'),
+    lightboxImageContainer: document.querySelector('[data-lightbox-image-container]')
   };
 
   if (!els.book || !els.thumbnails) {
@@ -202,6 +237,7 @@ function initFlipBook() {
 
   const state = createFlipBookState({ viewportWidth: window.innerWidth });
   let touchStart = null;
+  let preloadTimer = null;
   applyTheme(getPreferredTheme(), els.themeToggle);
 
   function renderPages() {
@@ -219,11 +255,11 @@ function initFlipBook() {
         renderLightbox();
       });
 
-      const image = document.createElement('img');
-      image.src = imagePath(page);
-      image.alt = page.title;
-      image.loading = page.index < 2 ? 'eager' : 'lazy';
-      image.decoding = 'async';
+      const image = createResponsiveImage(page, {
+        alt: page.title,
+        loading: page.index < 2 ? 'eager' : 'lazy',
+        fetchPriority: page.index < 2 ? 'high' : 'low'
+      });
 
       const caption = document.createElement('span');
       caption.className = 'page-caption';
@@ -234,6 +270,7 @@ function initFlipBook() {
     });
 
     updateChrome();
+    scheduleAdjacentPreload();
   }
 
   function renderThumbnails() {
@@ -249,11 +286,12 @@ function initFlipBook() {
         renderPages();
       });
 
-      const image = document.createElement('img');
-      image.src = imagePath(page);
-      image.alt = '';
-      image.loading = 'lazy';
-      image.decoding = 'async';
+      const image = createResponsiveImage(page, {
+        alt: '',
+        variant: 'thumbnail',
+        loading: 'lazy',
+        fetchPriority: 'low'
+      });
 
       const label = document.createElement('span');
       label.textContent = page.title;
@@ -291,13 +329,42 @@ function initFlipBook() {
     }
 
     const page = PAGE_IMAGES[state.lightboxIndex];
-    els.lightboxImage.src = imagePath(page);
-    els.lightboxImage.alt = page.title;
+    els.lightboxImageContainer.replaceChildren(createResponsiveImage(page, {
+      alt: page.title,
+      loading: 'eager',
+      fetchPriority: 'high'
+    }));
     els.lightboxTitle.textContent = page.title;
     els.lightboxStatus.textContent = `${state.lightboxIndex + 1} / ${PAGE_IMAGES.length}`;
     els.lightboxPrev.disabled = state.lightboxIndex === 0;
     els.lightboxNext.disabled = state.lightboxIndex === PAGE_IMAGES.length - 1;
     els.lightboxClose.focus();
+  }
+
+  function scheduleAdjacentPreload() {
+    window.clearTimeout(preloadTimer);
+    preloadTimer = window.setTimeout(() => {
+      const step = state.doublePage ? 2 : 1;
+      const nextStart = normalizeStartIndex(state.currentIndex + step, state.doublePage);
+      if (nextStart <= state.currentIndex) {
+        return;
+      }
+
+      const preload = () => {
+        const nextState = { ...state, currentIndex: nextStart };
+        getVisiblePages(nextState).forEach((page) => {
+          const image = new Image();
+          image.fetchPriority = 'low';
+          image.src = imagePath(`webp/${page.webpFile}`);
+        });
+      };
+
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(preload, { timeout: 1500 });
+      } else {
+        preload();
+      }
+    }, 500);
   }
 
   els.prev.addEventListener('click', () => {
@@ -407,6 +474,7 @@ if (typeof module !== 'undefined') {
     openLightbox,
     closeLightbox,
     normalizeTheme,
-    getNextTheme
+    getNextTheme,
+    getImageSources
   };
 }
