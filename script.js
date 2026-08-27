@@ -145,6 +145,13 @@ function getImageSources(page, variant = 'full') {
   };
 }
 
+function getDownloadTarget(page) {
+  return {
+    href: imagePath(page.file),
+    fileName: page.file.split('/').pop()
+  };
+}
+
 function createResponsiveImage(page, {
   alt = '',
   variant = 'full',
@@ -230,6 +237,7 @@ function initFlipBook() {
     lightbox: document.querySelector('[data-lightbox]'),
     lightboxTitle: document.querySelector('[data-lightbox-title]'),
     lightboxStatus: document.querySelector('[data-lightbox-status]'),
+    lightboxDownload: document.querySelector('[data-lightbox-download]'),
     lightboxClose: document.querySelector('[data-lightbox-close]'),
     lightboxPrev: document.querySelector('[data-lightbox-prev]'),
     lightboxNext: document.querySelector('[data-lightbox-next]'),
@@ -397,6 +405,19 @@ function initFlipBook() {
     renderLightbox();
   });
 
+  els.lightboxDownload.addEventListener('click', () => {
+    if (state.lightboxIndex === null) {
+      return;
+    }
+    const { href, fileName } = getDownloadTarget(PAGE_IMAGES[state.lightboxIndex]);
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = fileName;
+    document.body.append(link);
+    link.click();
+    link.remove();
+  });
+
   els.lightboxPrev.addEventListener('click', () => {
     openLightbox(state, state.lightboxIndex - 1);
     renderLightbox();
@@ -482,6 +503,7 @@ if (typeof module !== 'undefined') {
     closeLightbox,
     normalizeTheme,
     getNextTheme,
-    getImageSources
+    getImageSources,
+    getDownloadTarget
   };
 }

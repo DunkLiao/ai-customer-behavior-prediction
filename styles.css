@@ -348,6 +348,12 @@ button:disabled {
   line-height: 1;
 }
 
+.lightbox-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .lightbox-image-container {
   position: relative;
   grid-column: 2;

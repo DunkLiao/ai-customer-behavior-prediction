@@ -16,7 +16,8 @@ const {
   closeLightbox,
   normalizeTheme,
   getNextTheme,
-  getImageSources
+  getImageSources,
+  getDownloadTarget
 } = require('../script');
 
 test('includes every infographic in the intended reading order', () => {
@@ -223,4 +224,22 @@ test('lightbox image stays fully contained within its available area', () => {
   assert.match(imageBlock, /width: 100%;/);
   assert.match(imageBlock, /height: 100%;/);
   assert.match(imageBlock, /object-fit: contain;/);
+});
+
+test('download target resolves the original PNG href and file name', () => {
+  const page = PAGE_IMAGES[0];
+
+  assert.deepEqual(getDownloadTarget(page), {
+    href: 'infographics/%E4%BA%A4%E5%8F%89%E6%AF%94%E7%8E%87.png',
+    fileName: '交叉比率.png'
+  });
+});
+
+test('lightbox provides a download control', () => {
+  const html = fs.readFileSync('index.html', 'utf8');
+  const css = fs.readFileSync('styles.css', 'utf8');
+
+  assert.match(html, /data-lightbox-download/);
+  assert.match(html, /aria-label="下載圖片"/);
+  assert.match(css, /\.lightbox-actions\s*\{/);
 });
