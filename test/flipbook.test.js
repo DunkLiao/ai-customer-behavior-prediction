@@ -76,6 +76,17 @@ test('image sources keep WebP primary assets and PNG fallbacks', () => {
   });
 });
 
+test('lightbox sources use the original PNG without a WebP primary', () => {
+  const page = PAGE_IMAGES[0];
+
+  assert.deepEqual(getImageSources(page, 'original'), {
+    primary: 'infographics/交叉比率.png',
+    fallback: 'infographics/交叉比率.png',
+    width: 1536,
+    height: 1024
+  });
+});
+
 test('desktop mode shows a two-page spread and advances by spreads', () => {
   const state = createFlipBookState({ viewportWidth: 1280 });
 
@@ -197,12 +208,18 @@ test('page caption stays readable on its dark overlay in light theme', () => {
 });
 
 test('lightbox image stays fully contained within its available area', () => {
+  const html = fs.readFileSync('index.html', 'utf8');
   const css = fs.readFileSync('styles.css', 'utf8');
+  const containerTag = html.match(/<div[^>]*data-lightbox-image-container[^>]*>/)?.[0] ?? '';
   const containerBlock = css.match(/\.lightbox-image-container\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
   const imageBlock = css.match(/\.lightbox-image-container img\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
 
-  assert.match(containerBlock, /position: fixed;/);
-  assert.match(containerBlock, /inset: 90px 90px 24px;/);
+  assert.match(containerTag, /class="lightbox-image-container"/);
+  assert.match(containerBlock, /position: relative;/);
+  assert.match(containerBlock, /grid-column: 2;/);
+  assert.match(containerBlock, /grid-row: 2;/);
+  assert.doesNotMatch(containerBlock, /position: fixed;/);
+  assert.match(imageBlock, /position: absolute;/);
   assert.match(imageBlock, /width: 100%;/);
   assert.match(imageBlock, /height: 100%;/);
   assert.match(imageBlock, /object-fit: contain;/);

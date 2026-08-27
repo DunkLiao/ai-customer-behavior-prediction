@@ -134,8 +134,11 @@ function imagePath(file) {
 
 function getImageSources(page, variant = 'full') {
   const isThumbnail = variant === 'thumbnail';
+  const isOriginal = variant === 'original';
   return {
-    primary: `infographics/${isThumbnail ? 'thumbs' : 'webp'}/${isThumbnail ? page.thumbnailFile : page.webpFile}`,
+    primary: isOriginal
+      ? `infographics/${page.file}`
+      : `infographics/${isThumbnail ? 'thumbs' : 'webp'}/${isThumbnail ? page.thumbnailFile : page.webpFile}`,
     fallback: `infographics/${page.file}`,
     width: isThumbnail ? 300 : 1536,
     height: isThumbnail ? 200 : 1024
@@ -150,12 +153,15 @@ function createResponsiveImage(page, {
 } = {}) {
   const sources = getImageSources(page, variant);
   const picture = document.createElement('picture');
-  const source = document.createElement('source');
-  source.type = 'image/webp';
-  source.srcset = imagePath(sources.primary.replace(/^infographics\//, ''));
+  if (variant !== 'original') {
+    const source = document.createElement('source');
+    source.type = 'image/webp';
+    source.srcset = imagePath(sources.primary.replace(/^infographics\//, ''));
+    picture.append(source);
+  }
 
   const image = document.createElement('img');
-  image.src = imagePath(sources.fallback.replace(/^infographics\//, ''));
+  image.src = imagePath((variant === 'original' ? sources.primary : sources.fallback).replace(/^infographics\//, ''));
   image.alt = alt;
   image.width = sources.width;
   image.height = sources.height;
@@ -163,7 +169,7 @@ function createResponsiveImage(page, {
   image.decoding = 'async';
   image.fetchPriority = fetchPriority;
 
-  picture.append(source, image);
+  picture.append(image);
   return picture;
 }
 
@@ -331,6 +337,7 @@ function initFlipBook() {
     const page = PAGE_IMAGES[state.lightboxIndex];
     els.lightboxImageContainer.replaceChildren(createResponsiveImage(page, {
       alt: page.title,
+      variant: 'original',
       loading: 'eager',
       fetchPriority: 'high'
     }));
