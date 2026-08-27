@@ -207,7 +207,7 @@ h1 {
   max-width: calc(100% - 16px);
   padding: 5px 8px;
   border-radius: 6px;
-  color: var(--text);
+  color: var(--paper);
   background: rgba(22, 22, 20, 0.78);
   font-size: 0.85rem;
   font-weight: 700;

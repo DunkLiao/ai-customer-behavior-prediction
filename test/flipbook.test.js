@@ -159,3 +159,11 @@ test('light theme keeps control text readable on pale controls', () => {
   assert.match(controlThemeBlock, /\[data-theme="light"\] \.nav-button/);
   assert.match(controlThemeBlock, /color: var\(--text\);/);
 });
+
+test('page caption stays readable on its dark overlay in light theme', () => {
+  const css = fs.readFileSync('styles.css', 'utf8');
+  const pageCaptionBlock = css.match(/\.page-caption\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+
+  assert.match(pageCaptionBlock, /background: rgba\(22, 22, 20, 0\.78\);/);
+  assert.match(pageCaptionBlock, /color: var\(--paper\);/);
+});
