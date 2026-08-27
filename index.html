@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>零售分析資訊圖翻頁書</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Retail Analytics Infographics</p>
+        <h1>零售分析資訊圖翻頁書</h1>
+        <p class="course-note">
+          參加工研院2026年8/19、8/26 客戶數據分析：AI解讀消費者歷史數據高效行銷實作應用班(臺北班)，將上課專有名詞以perplexity查詢後利用chatgpt產生資訊圖表
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深淺色模式" aria-pressed="false">
+          <span data-theme-icon aria-hidden="true">☾</span>
+          <span data-theme-label>深色</span>
+        </button>
+        <div class="status" data-page-status aria-live="polite">1-2 / 22</div>
+      </div>
+    </header>
+
+    <main class="reader" aria-label="資訊圖翻頁閱讀器">
+      <section class="stage" aria-label="翻頁區">
+        <button class="nav-button" type="button" data-prev aria-label="上一頁">‹</button>
+        <div class="book" data-book aria-live="polite"></div>
+        <button class="nav-button" type="button" data-next aria-label="下一頁">›</button>
+      </section>
+
+      <section class="thumb-strip" aria-label="縮圖目錄">
+        <div class="thumbs" data-thumbnails></div>
+      </section>
+
+      <noscript>
+        <section class="noscript-gallery" aria-label="資訊圖清單">
+          <img src="infographics/交叉比率.png" alt="交叉比率">
+          <img src="infographics/安全存量.png" alt="安全存量">
+          <img src="infographics/步留率.png" alt="步留率">
+          <img src="infographics/坪效.png" alt="坪效">
+          <img src="infographics/枱帳_1.png" alt="枱帳 1">
+          <img src="infographics/枱帳_2.png" alt="枱帳 2">
+          <img src="infographics/范蠡的經營智慧.png" alt="范蠡的經營智慧">
+          <img src="infographics/孫子兵法在零售業分析.png" alt="孫子兵法在零售業分析">
+          <img src="infographics/真毛利.png" alt="真毛利">
+          <img src="infographics/貢獻度與投入資源要能夠平衡.png" alt="貢獻度與投入資源要能夠平衡">
+          <img src="infographics/商品敏感性與營業額.png" alt="商品敏感性與營業額">
+          <img src="infographics/粗毛利.png" alt="粗毛利">
+          <img src="infographics/零售ABCZ法.png" alt="零售ABCZ法">
+          <img src="infographics/銷售金額眾數.png" alt="銷售金額眾數">
+          <img src="infographics/駐足率.png" alt="駐足率">
+          <img src="infographics/膨脹率.png" alt="膨脹率">
+          <img src="infographics/總毛利率.png" alt="總毛利率">
+          <img src="infographics/ABCZ分析.png" alt="ABCZ分析">
+          <img src="infographics/AISAS.png" alt="AISAS">
+          <img src="infographics/PESTEL分析.png" alt="PESTEL分析">
+          <img src="infographics/pi值.png" alt="pi值">
+          <img src="infographics/SKU.png" alt="SKU">
+        </section>
+      </noscript>
+    </main>
+
+    <footer class="site-footer">
+      @工研院2026年8/19、8/26 客戶數據分析：AI解讀消費者歷史數據高效行銷實作應用班(臺北班) Created by Dunk
+    </footer>
+
+    <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+      <div class="lightbox-bar">
+        <div>
+          <h2 id="lightbox-title" data-lightbox-title></h2>
+          <p data-lightbox-status></p>
+        </div>
+        <button class="icon-button" type="button" data-lightbox-close aria-label="關閉放大檢視">×</button>
+      </div>
+      <button class="lightbox-nav prev" type="button" data-lightbox-prev aria-label="上一張">‹</button>
+      <img data-lightbox-image alt="">
+      <button class="lightbox-nav next" type="button" data-lightbox-next aria-label="下一張">›</button>
+    </div>
+  </body>
+</html>
